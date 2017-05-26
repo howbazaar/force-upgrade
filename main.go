@@ -14,6 +14,7 @@ import (
 	"github.com/juju/juju/agent"
 	"github.com/juju/juju/mongo"
 	"github.com/juju/juju/state"
+	jversion "github.com/juju/juju/version"
 )
 
 var logger = loggo.GetLogger("forceagentversion")
@@ -79,6 +80,7 @@ func getConfig(tag names.MachineTag) (agent.ConfigSetterWriter, error) {
 }
 
 func main() {
+	jversion.Current = version.MustParse("2.1.4")
 	loggo.GetLogger("").SetLogLevel(loggo.TRACE)
 
 	st, err := getState()
@@ -87,7 +89,7 @@ func main() {
 
 	args := os.Args
 	if len(args) < 3 {
-		fmt.Printf("Useage: %s <model-uuid> <version>", args[0])
+		fmt.Printf("Useage: %s <model-uuid> <version>\n", args[0])
 		os.Exit(1)
 	}
 
